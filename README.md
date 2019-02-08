@@ -1,6 +1,6 @@
 # Weather
 
-[![NPM][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage][coverage-image]][coverage-url]
+[![NPM][npm-image]][npm-url]
 
 Weather is a module for obtaining weather information.
 
@@ -118,11 +118,5 @@ weather.find({search: 'San Francisco, CA', degreeType: 'F', resCount: 1}, functi
 Licensed under The MIT License (MIT)  
 For the full copyright and license information, please view the LICENSE.txt file.
 
-[npm-url]: http://npmjs.org/package/weather-js
-[npm-image]: https://badge.fury.io/js/weather-js.svg
-
-[travis-url]: https://travis-ci.org/devfacet/weather
-[travis-image]: https://travis-ci.org/devfacet/weather.svg?branch=master
-
-[coverage-url]: https://coveralls.io/github/devfacet/weather?branch=master
-[coverage-image]: https://coveralls.io/repos/devfacet/weather/badge.svg?branch=master&service=github
+[npm-url]: http://npmjs.org/package/weather-js2
+[npm-image]: https://badge.fury.io/js/weather-js2.svg
