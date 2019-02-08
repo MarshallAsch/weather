@@ -19,11 +19,7 @@
   "keywords": [
     "weather",
     "forecast"
-  ],
-  
-  //Original Author - devfacet
-  //http://github.com/devfacet/weather
-  
+  ]
   "author": "MAPReiff",
   "license": "MIT",
   "homepage": "http://github.com/MAPReiff/weather",
