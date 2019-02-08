@@ -16,6 +16,7 @@ module.exports = (function() {
   var xmlParser     = new xml2JS.Parser({charkey: 'C$', attrkey: 'A$', explicitArray: true}),
       defLang       = 'en-US',
       defDegreeType = 'F',
+      defResCount   = 1,
       defTimeout    = 10000,
       findUrl       = 'http://weather.service.msn.com/find.aspx';
 
@@ -33,6 +34,7 @@ module.exports = (function() {
     var result     = [],
         lang       = options.lang || defLang,
         degreeType = options.degreeType || defDegreeType,
+        resCount   = options.resCount || defResCount,
         timeout    = options.timeout || defTimeout,
         search     = qs.escape(''+options.search),
         reqUrl     = findUrl + '?src=outlook&weadegreetype=' + (''+degreeType) + '&culture=' + (''+lang) + '&weasearchstr=' + search;
@@ -68,7 +70,9 @@ module.exports = (function() {
         // Iterate over weather data
         var weatherLen = resultJSON.weatherdata.weather.length,
             weatherItem;
-        for(var i = 0; i < weatherLen; i++) {
+            
+        for(var i = 0; i < resCount; i++) {
+        // for (var i = 0; i < 1; i++) {
 
           if(typeof resultJSON.weatherdata.weather[i]['A$'] !== 'object')
             continue;
