@@ -1,5 +1,5 @@
 {
-  "name": "weather-js",
+  "name": "weather-js2",
   "version": "2.0.1",
   "description": "A module for obtaining weather information",
   "main": "index.js",
@@ -14,15 +14,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/devfacet/weather.git"
+    "url": "https://github.com/MAPReiff/weather.git"
   },
   "keywords": [
     "weather",
     "forecast"
   ],
-  "author": "devfacet",
+  
+  //Original Author - devfacet
+  //http://github.com/devfacet/weather
+  
+  "author": "MAPReiff",
   "license": "MIT",
-  "homepage": "http://github.com/devfacet/weather",
+  "homepage": "http://github.com/MAPReiff/weather",
   "dependencies": {
     "request": "2.x.x",
     "xml2js": "0.4.x"
