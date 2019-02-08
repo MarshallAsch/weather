@@ -7,19 +7,20 @@ Weather is a module for obtaining weather information.
 ## Installation
 
 ```bash
-npm install weather-js
+npm install weather-js2
 ```
 
 ## Usage
 
 ```javascript
-var weather = require('weather-js');
+var weather = require('weather-js2');
 
 // Options:
-// search:     location name or zipcode
-// degreeType: F or C
+// search: string           location name or zipcode
+// degreeType: string       F or C
+// resCount: int            Maximum number of results
 
-weather.find({search: 'San Francisco, CA', degreeType: 'F'}, function(err, result) {
+weather.find({search: 'San Francisco, CA', degreeType: 'F', resCount: 1}, function(err, result) {
   if(err) console.log(err);
 
   console.log(JSON.stringify(result, null, 2));
