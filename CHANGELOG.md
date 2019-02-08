@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.1 (2019-02-08)
+
+- Forked from devfacet
+- Added resCount option, allowing users to set the maximum results returned
+
 ## 2.0.0 (2017-03-14)
 
 - **[BREAKING CHANGE]** Returns empty array (no error) if the given address is not found
