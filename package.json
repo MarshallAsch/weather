@@ -21,18 +21,18 @@
     "forecast"
   ],
   "author": [
-      "MAPReiff",
-      "devfacet",
-      {
-        "name": "Marshall Asch",
-        "email": "maasch@rogers.com",
-        "url": "https://marshallasch.ca/"
-      }
+    "MAPReiff",
+    "devfacet",
+    {
+      "name": "Marshall Asch",
+      "email": "maasch@rogers.com",
+      "url": "https://marshallasch.ca/"
+    }
   ],
   "license": "MIT",
   "homepage": "http://github.com/MAPReiff/weather",
   "dependencies": {
-    "request": "2.x.x",
+    "request-promise-native": "^1.0.9",
     "xml2js": "0.4.x"
   },
   "devDependencies": {

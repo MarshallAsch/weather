@@ -1,6 +1,8 @@
 # Weather
 
 [![NPM][npm-image]][npm-url]
+![tests](https://github.com/MarshallAsch/weather/workflows/tests/badge.svg)
+![linter](https://github.com/MarshallAsch/weather/workflows/linter/badge.svg)
 
 Weather is a module for obtaining weather information.
 

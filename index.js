@@ -6,123 +6,134 @@
 /* jslint node: true, sub: true */
 'use strict';
 
-var request = require('request'),
-    qs      = require('querystring'),
-    xml2JS  = require('xml2js');
+const request = require('request-promise-native');
+const qs      = require('querystring');
+const xml2JS  = require('xml2js');
 
-// Init the module
-module.exports = (function() {
 
-  var xmlParser     = new xml2JS.Parser({charkey: 'C$', attrkey: 'A$', explicitArray: true}),
-      defLang       = 'en-US',
-      defDegreeType = 'F',
-      defResCount   = 1,
-      defTimeout    = 10000,
-      findUrl       = 'http://weather.service.msn.com/find.aspx';
+const xmlParser     = new xml2JS.Parser({charkey: 'C$', attrkey: 'A$', explicitArray: true});
+const defResCount   = 1;
+const defTimeout    = 10000;
+const findUrl       = 'http://weather.service.msn.com/find.aspx';
 
-  var find = function find(options, callback) {
+function genObject(data, current, forcasts) {
 
-    if(typeof callback !== 'function')
-      callback = function callback(err, result) { return err || result; };
+    return {
+      location: {
+        name: data['weatherlocationname'],
+        zipcode: data['zipcode'],
+        lat: data['lat'],
+        long: data['long'],
+        timezone: data['timezone'],
+        alert: data['alert'],
+        degreetype: data['degreetype'],
+        imagerelativeurl: data['imagerelativeurl']
+        //url: data['url'],
+        //code: data['weatherlocationcode'],
+        //entityid: data['entityid'],
+        //encodedlocationname: data['encodedlocationname']
+      },
+      current: generateCurrent(current, data['imagerelativeurl']),
+      forecast: generateForcast(forcasts)
+    };
+}
 
-    if(!options || typeof options !== 'object')
-      return callback('invalid options');
+function generateCurrent(current, url) {
+    let cur = null;
 
-    if(!options.search)
-      return callback('missing search input');
-
-    var result     = [],
-        lang       = options.lang || defLang,
-        degreeType = options.degreeType || defDegreeType,
-        resCount   = options.resCount || defResCount,
-        timeout    = options.timeout || defTimeout,
-        search     = qs.escape(''+options.search),
-        reqUrl     = findUrl + '?src=outlook&weadegreetype=' + (''+degreeType) + '&culture=' + (''+lang) + '&weasearchstr=' + search;
-
-    request.get({url: reqUrl, timeout: timeout}, function(err, res, body) {
-
-      if(err)                    return callback(err);
-      if(res.statusCode !== 200) return callback(new Error('request failed (' + res.statusCode + ')'));
-      if(!body)                  return callback(new Error('failed to get body content'));
-
-      // Check body content
-      if(body.indexOf('<') !== 0) {
-        if(body.search(/not found/i) !== -1) {
-          return callback(null, result);
-        }
-        return callback(new Error('invalid body content'));
+    if(current instanceof Array && current.length > 0) {
+      if(typeof current[0]['A$'] === 'object') {
+        cur = current[0]['A$'];
+        cur.imageUrl = url + 'law/' + cur.skycode + '.gif';
       }
+    }
 
-      // Parse body
-      xmlParser.parseString(body, function(err, resultJSON) {
-        if(err) return callback(err);
+    return cur;
+}
 
-        if(!resultJSON || !resultJSON.weatherdata || !resultJSON.weatherdata.weather)
-          return callback(new Error('failed to parse weather data'));
+function generateForcast(forcasts) {
+    if(forcasts instanceof Array) {
+        return forcasts.filter(f => typeof f['A$'] === 'object').map(f => f['A$']);
+    } else {
+        return null
+    }
+}
 
-        if(resultJSON.weatherdata.weather['A$'] && resultJSON.weatherdata.weather['A$'].errormessage)
-          return callback(resultJSON.weatherdata.weather['A$'].errormessage);
+function generateUrl(options) {
+    return findUrl + '?' + qs.stringify({
+            src: 'outlook',
+            weadegreetype: options.degreeType || 'F',
+            culture: options.lang || 'en-US',
+            weasearchstr: options.search
+        });
+}
 
-        if(!(resultJSON.weatherdata.weather instanceof Array)) {
-          return callback(new Error('missing weather info'));
-        }
+function validateOptions(options) {
 
-        // Iterate over weather data
-        var weatherLen = resultJSON.weatherdata.weather.length,
-            weatherItem;
-            
-        for(var i = 0; i < resCount; i++) {
-        // for (var i = 0; i < 1; i++) {
+    return new Promise((resolve, reject) => {
+        if(!options || typeof options !== 'object')
+          reject(new Error('invalid options'));
 
-          if(typeof resultJSON.weatherdata.weather[i]['A$'] !== 'object')
-            continue;
+        if(!options.search)
+          reject(new Error('missing search input'));
 
-          // Init weather item
-          weatherItem = {
-            location: {
-              name: resultJSON.weatherdata.weather[i]['A$']['weatherlocationname'],
-              zipcode: resultJSON.weatherdata.weather[i]['A$']['zipcode'],
-              lat: resultJSON.weatherdata.weather[i]['A$']['lat'],
-              long: resultJSON.weatherdata.weather[i]['A$']['long'],
-              timezone: resultJSON.weatherdata.weather[i]['A$']['timezone'],
-              alert: resultJSON.weatherdata.weather[i]['A$']['alert'],
-              degreetype: resultJSON.weatherdata.weather[i]['A$']['degreetype'],
-              imagerelativeurl: resultJSON.weatherdata.weather[i]['A$']['imagerelativeurl']
-              //url: resultJSON.weatherdata.weather[i]['A$']['url'],
-              //code: resultJSON.weatherdata.weather[i]['A$']['weatherlocationcode'],
-              //entityid: resultJSON.weatherdata.weather[i]['A$']['entityid'],
-              //encodedlocationname: resultJSON.weatherdata.weather[i]['A$']['encodedlocationname']
-            },
-            current: null,
-            forecast: null
-          };
-
-          if(resultJSON.weatherdata.weather[i]['current'] instanceof Array && resultJSON.weatherdata.weather[i]['current'].length > 0) {
-            if(typeof resultJSON.weatherdata.weather[i]['current'][0]['A$'] === 'object') {
-              weatherItem.current = resultJSON.weatherdata.weather[i]['current'][0]['A$'];
-
-              weatherItem.current.imageUrl = weatherItem.location.imagerelativeurl + 'law/' + weatherItem.current.skycode + '.gif';
-            }
-          }
-
-          if(resultJSON.weatherdata.weather[i]['forecast'] instanceof Array) {
-            weatherItem.forecast = [];
-            for(var k = 0; k < resultJSON.weatherdata.weather[i]['forecast'].length; k++) {
-              if(typeof resultJSON.weatherdata.weather[i]['forecast'][k]['A$'] === 'object')
-                weatherItem.forecast.push(resultJSON.weatherdata.weather[i]['forecast'][k]['A$']);
-            }
-          }
-
-          // Push weather item into result
-          result.push(weatherItem);
-        }
-
-        return callback(null, result);
-      });
+        resolve(options);
     });
-  };
+}
 
-  return {
-    find: find
-  };
-})();
+function find(options, callback) {
+
+    return validateOptions(options)
+        .then(options => request.get({url: generateUrl(options), timeout: options.timeout || defTimeout}))
+        .then(body => {
+
+            if(!body) throw new Error('failed to get body content');
+
+            // Check body content
+            if(body.indexOf('<') !== 0) {
+                if(body.search(/not found/i) !== -1) {
+                    return [];
+                }
+                throw new Error('invalid body content');
+            }
+
+            // parse xml
+            return xmlParser.parseStringPromise(body);
+        })
+        .then(res => {
+
+            if (res instanceof Array) return res;
+
+            if(!res || !res.weatherdata || !res.weatherdata.weather)  throw new Error('failed to parse weather data');
+
+            let weather = res.weatherdata.weather;
+
+            if(weather['A$'] && weather['A$'].errormessage) throw new Error(weather['A$'].errormessage);
+
+            if(!(weather instanceof Array)) throw new Error('missing weather info');
+
+            return weather.filter(w => typeof w['A$'] === 'object')
+              .slice(0, options.resCount || defResCount)
+              .map(w => genObject(w['A$'], w['current'], w['forecast']));
+        })
+        .then(results => {
+
+            if(typeof callback === 'function') {
+                callback(null, results);
+            } else {
+                return results;
+            }
+        })
+        .catch (err => {
+
+            if(typeof callback === 'function') {
+                callback(err);
+            } else {
+                throw err;
+            }
+        });
+}
+
+module.exports = {
+  find: find
+};
