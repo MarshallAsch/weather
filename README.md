@@ -17,8 +17,8 @@ var weather = require('weather-js2');
 
 // Options:
 // search: string           location name or zipcode
-// degreeType: string       F or C
-// resCount: int            Maximum number of results
+// degreeType: string       F or C (default: F)
+// resCount: int            Maximum number of results (default: 1)
 
 weather.find({search: 'San Francisco, CA', degreeType: 'F', resCount: 1}, function(err, result) {
   if(err) console.log(err);

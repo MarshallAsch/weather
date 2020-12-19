@@ -23,7 +23,7 @@ describe('weather', function() {
 
         expect(result[0]).to.have.property('location').to.be.a('object');
         expect(result[0]['location']).to.have.property('name', 'San Francisco, CA');
-        expect(result[0]['location']).to.have.property('lat', '37.777');
+        expect(result[0]['location']).to.have.property('lat', '37.78');
         expect(result[0]['location']).to.have.property('long', '-122.42');
         expect(result[0]['location']).to.have.property('timezone').to.be.a('string');
         expect(result[0]['location']).to.have.property('alert').to.be.a('string');
@@ -64,7 +64,7 @@ describe('weather', function() {
     });
 
     it('should find multiple locations with weather information', function(done) {
-      weather.find({search: 'Washington', degreeType: 'F'}, function(err, result) {
+      weather.find({search: 'Washington', degreeType: 'F', resCount: 2}, function(err, result) {
         if(err) return done(err);
 
         expect(err).to.be.equal(null);
