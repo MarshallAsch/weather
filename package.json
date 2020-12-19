@@ -1,6 +1,6 @@
 {
   "name": "weather-js2",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A module for obtaining weather information",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,15 @@
     "weather",
     "forecast"
   ],
-  "author": "MAPReiff",
+  "author": [
+      "MAPReiff",
+      "devfacet",
+      {
+        "name": "Marshall Asch",
+        "email": "maasch@rogers.com",
+        "url": "https://marshallasch.ca/"
+      }
+  ],
   "license": "MIT",
   "homepage": "http://github.com/MAPReiff/weather",
   "dependencies": {
@@ -29,12 +37,12 @@
   },
   "devDependencies": {
     "chai": "3.5.x",
-    "jshint": "2.9.x",
-    "jshint-stylish": "2.2.x",
-    "mocha": "3.2.x",
-    "mocha-multi": "0.10.x",
+    "coveralls": "^3.1.0",
     "dependency-check": "2.8.x",
     "istanbul": "0.4.x",
-    "coveralls": "^2.11.16"
+    "jshint": "2.9.x",
+    "jshint-stylish": "2.2.x",
+    "mocha": "^8.2.1",
+    "mocha-multi": "^1.1.3"
   }
 }

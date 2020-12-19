@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- created package-lock file
+- bumped dependancy versions
+- added me and the original developer to the author section in package.json
+
 ## 2.0.1 (2019-02-08)
 
 - Forked from devfacet
