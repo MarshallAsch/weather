@@ -6,7 +6,7 @@
 - bumped dependancy versions
 - added me and the original developer to the author section in package.json
 - fixed tests that were failing
-
+- added github actions for linting and running tests
 
 ## 2.0.1 (2019-02-08)
 
