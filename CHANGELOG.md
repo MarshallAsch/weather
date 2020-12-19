@@ -5,6 +5,8 @@
 - created package-lock file
 - bumped dependancy versions
 - added me and the original developer to the author section in package.json
+- fixed tests that were failing
+
 
 ## 2.0.1 (2019-02-08)
 
