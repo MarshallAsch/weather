@@ -144,4 +144,4 @@ Licensed under The MIT License (MIT)
 For the full copyright and license information, please view the LICENSE.txt file.
 
 [npm-url]: http://npmjs.org/package/weather-promise
-[npm-image]: https://badge.fury.io/js/weather-js2.svg
+[npm-image]: https://badge.fury.io/js/weather-promise.svg
