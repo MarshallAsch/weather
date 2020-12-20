@@ -6,6 +6,8 @@ Thumbs.db
 *.prof
 *.out
 
+.editorconfig
+
 tmp/
 logs/
 reports/

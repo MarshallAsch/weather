@@ -7,6 +7,10 @@
 - added me and the original developer to the author section in package.json
 - fixed tests that were failing
 - added github actions for linting and running tests
+- explicitly marked to support node version 10.0.3 and later
+- removed node versions 0.12, 4, and 6 from the automated tests
+- removed the travis ci pipeline
+- changed linter to use eslint with the airbnb style guide
 
 ## 2.0.1 (2019-02-08)
 

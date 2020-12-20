@@ -15,7 +15,7 @@ npm install weather-js2
 ## Usage
 
 ```javascript
-var weather = require('weather-js2');
+const weather = require('weather-js2');
 
 // Options:
 // search: string           location name or zipcode
@@ -110,6 +110,29 @@ weather.find({search: 'San Francisco, CA', degreeType: 'F', resCount: 1}, functi
   }
 ]
 ```
+
+## Promises
+
+The weather module also supports the use of promises instead of only using callbacks.
+It uses the same function just leave out the callback.
+
+```javascript
+const weather = require('weather-js2');
+
+// Options:
+// search: string           location name or zipcode
+// degreeType: string       F or C (default: F)
+// resCount: int            Maximum number of results (default: 1)
+
+weather.find({search: 'San Francisco, CA', degreeType: 'F', resCount: 1})
+    .then(result => {
+        console.log(JSON.stringify(result, null, 2));
+    })
+    .catch(err => {
+        if(err) console.log(err);
+    });
+```
+
 
 ## Notes
 
