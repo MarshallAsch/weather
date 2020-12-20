@@ -1,0 +1,10 @@
+.github/*
+test/*
+reports/*
+
+.istanbul.yml
+.eslintignore
+.eslintrc.json
+.gitattributes
+.gitignore
+*.tgz

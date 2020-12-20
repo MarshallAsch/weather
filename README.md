@@ -9,13 +9,13 @@ Weather is a module for obtaining weather information.
 ## Installation
 
 ```bash
-npm install weather-js2
+npm install weather-promise
 ```
 
 ## Usage
 
 ```javascript
-const weather = require('weather-js2');
+const weather = require('weather-promise');
 
 // Options:
 // search: string           location name or zipcode
@@ -117,7 +117,7 @@ The weather module also supports the use of promises instead of only using callb
 It uses the same function just leave out the callback.
 
 ```javascript
-const weather = require('weather-js2');
+const weather = require('weather-promise');
 
 // Options:
 // search: string           location name or zipcode
@@ -143,5 +143,5 @@ weather.find({search: 'San Francisco, CA', degreeType: 'F', resCount: 1})
 Licensed under The MIT License (MIT)  
 For the full copyright and license information, please view the LICENSE.txt file.
 
-[npm-url]: http://npmjs.org/package/weather-js2
+[npm-url]: http://npmjs.org/package/weather-promise
 [npm-image]: https://badge.fury.io/js/weather-js2.svg

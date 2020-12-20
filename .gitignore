@@ -5,6 +5,9 @@ Thumbs.db
 *.exe
 *.prof
 *.out
+*.tgz
+
+
 
 .editorconfig
 
